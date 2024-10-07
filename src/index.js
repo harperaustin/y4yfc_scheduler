@@ -1,8 +1,62 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import StartingScreen from './startingScreen';
+import NameScreenPlayer from './nameScreenPlayer';
+import NameScreenCoach from './nameScreenCoach';
+import PlayerSchedule from './playerSchedule';
+import CoachSchedule from './coachSchedule';
+
+
+
+function App() {
+  const [currentScreen, setCurrentScreen] = useState('StartingScreen')
+
+  const renderScreen = () => {
+    switch (currentScreen){
+      case 'StartingScreen':
+        return <StartingScreen 
+          onPlayer={() => setCurrentScreen('NameScreenPlayer')}
+          onCoach={() => setCurrentScreen('NameScreenCoach')}
+          />
+      case 'NameScreenPlayer':
+        return <NameScreenPlayer 
+          onBack={() => setCurrentScreen('StartingScreen')}
+          onContinue={(name) => {
+            setCurrentScreen('PlayerSchedule');
+            
+          }} 
+          />
+      case 'NameScreenCoach':
+        return <NameScreenCoach
+          onBack={() => setCurrentScreen('StartingScreen')}
+          onContinue={(name) => {
+            setCurrentScreen('CoachSchedule');
+            
+          }} 
+          />
+      case 'PlayerSchedule':
+        return <PlayerSchedule onBack={
+          () => {setCurrentScreen('NameScreenPlayer');}
+
+        }
+        />
+      case 'CoachSchedule':
+        return <CoachSchedule onBack={
+          () => {setCurrentScreen('NameScreenCoach')}
+        }
+        />
+      default:
+        return <h1>YFYFC</h1>
+    }
+  };
+
+  return(
+    <div>
+      {renderScreen()}
+    </div>
+  )
+  
+}
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -11,7 +65,3 @@ root.render(
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
