@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import './styles.css';
 
 
 
@@ -84,7 +85,7 @@ function PlayerSchedule( {onBack} ){
             <h1>
                 <button onClick={onBack}>GoBack</button>
                 Player Schedule
-                <div>
+                <div className='calendar-container'>
                 <FullCalendar plugins={[timeGridPlugin, interactionPlugin]}
                 selectable={true}
                 nowIndicator={true}
@@ -101,6 +102,15 @@ function PlayerSchedule( {onBack} ){
                 eventResizableFromStart={true}
                 eventResize={handleEventChange}
                 editable={true}
+                headerToolbar={{
+                    left:'',
+                    center:'',
+                    right:''
+                    }
+                }
+                height={'100%'}
+                className="fc"
+                
                 />
                 </div>
             </h1>
