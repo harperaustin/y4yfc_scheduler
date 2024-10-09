@@ -1,22 +1,19 @@
-.calendar-container {
-    height: 600px
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(8, 100px); /* 5 columns */
+    grid-template-rows: repeat(32, 20px);    /* 4 rows */
 }
 
-.fc-slats {
-    height: 100px; /* Adjust this value to increase or decrease slot height */
+.rectangle {
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20px;
+    width: 100px;
 }
 
-.fc-event {
-    font-size: 20px; /* Adjust this value as needed */
-}
-
-.fc-slot{
-    height: 1px;
-}
-.fc-time-grid .fc-slot {
-    height: 1000px; /* Change this value to adjust the height */
-}
-
-.fc-slats {
-    height: 1px;
+.label {
+    font-size: 14px;
+    color: black
 }
