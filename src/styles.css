@@ -2,6 +2,7 @@
     display: grid;
     grid-template-columns: repeat(8, 100px); /* 5 columns */
     grid-template-rows: repeat(32, 20px);    /* 4 rows */
+    user-select: none;
 }
 
 .rectangle {
@@ -16,4 +17,8 @@
 .label {
     font-size: 14px;
     color: black
+}
+
+.timeLabel {
+    pointer-events: none;
 }

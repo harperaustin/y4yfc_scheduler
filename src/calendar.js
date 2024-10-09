@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./styles.css"; // Import your CSS file
 
 const Calendar = () => {
   // Set the number of rows and columns
     const rows = 32;
     const cols = 8;
-    // NEED TO ADD THE LABELS TO EDGES
   // Generate the grid as an array of rectangles
 
     const timeLabels = [
@@ -25,11 +24,13 @@ const Calendar = () => {
     const [isMouseDown, setIsMouseDown] = useState(false);
 
     const handleClick = (row, col) => {
-        setClickedRectangles(prev => {
-            const newRectangles = prev.map(row => [...row]); // Create a copy of the current state
-            newRectangles[row][col] = !newRectangles[row][col]; // Toggle clicked state
-        return newRectangles;
-        });
+        if (row > 0 && col > 0) { // Only handle clicks for the inner grid
+            setClickedRectangles(prev => {
+                const newRectangles = prev.map(row => [...row]); // Create a copy of the current state
+                newRectangles[row][col] = !newRectangles[row][col]; // Toggle clicked state
+                return newRectangles;
+            });
+        }
     };
 
     const handleMouseDown = (row, col) => {
@@ -39,7 +40,11 @@ const Calendar = () => {
     
     const handleMouseEnter = (row, col) => {
         if (isMouseDown) {
-          handleClick(row, col); // Click the rectangle if mouse is down
+            setClickedRectangles(prev => {
+            const newRectangles = prev.map(r => [...r]); // Create a copy of the current state
+            newRectangles[row][col] = true; // Ensure this rectangle is green (selected)
+            return newRectangles;
+        });
         }
     };
     
@@ -49,6 +54,20 @@ const Calendar = () => {
 
     const today = new Date();
     const currentDay = today.getDay();
+
+    useEffect(() => {
+        const handleDocumentMouseUp = () => {
+            setIsMouseDown(false);
+        };
+    
+        document.addEventListener("mouseup", handleDocumentMouseUp);
+    
+        return () => {
+            document.removeEventListener("mouseup", handleDocumentMouseUp);
+        };
+    }, []);
+
+
 
   const grid = Array.from({ length: rows * cols }, (_, index) => {
     const row = Math.floor(index / cols);  // Calculate the row index
@@ -62,6 +81,10 @@ const Calendar = () => {
     } else {
         backgroundColor = clickedRectangles[row][col] ? "#90EE90" : "#FFFFFF"; // White for other rectangles
     }
+
+    const isClicked = clickedRectangles[row][col];
+    const time = timeLabels[row - 1];
+
 
     return (
     <div key={index}
@@ -79,7 +102,9 @@ const Calendar = () => {
                 <span className="label">{dayLabels[(col - 2 + currentDay) % 7]}</span>
                 <span className="label"> {date.toLocaleDateString(undefined, {month:"numeric", day: 'numeric'})} </span>
             </div>
-            ))
+            )) || ((isClicked && (
+                <span className="timeLabel">{time}</span>
+            )))
         }
     </div>
     );
