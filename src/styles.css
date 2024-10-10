@@ -2,9 +2,13 @@
 
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(8, 9vw); /* 5 columns */
-    grid-template-rows: repeat(32, 2.5vh);    /* 4 rows */
+    grid-template-columns: repeat(8, 10vw); /* 5 columns */
+    grid-template-rows: repeat(32, 2.25vh);    /* 4 rows */
     user-select: none;
+}
+.schedDiv {
+    overflow: hidden;
+     /* Prevent default scrolling on touch devices */
 }
 
 .rectangle {
@@ -15,8 +19,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 2.5vh;
-    width: 9vw;
+    height: 2.25vh;
+    width: 10vw;
+    touch-action: none;
 }
 
 .label {
@@ -83,12 +88,11 @@
 }
 .pSchedText {
     pointer-events: none;
-    font-size: 15px;
     color: black;
     font-family: 'lulo-one', sans-serif;
     font-weight: bold;
     margin: 0;
-    font-size: 24px; /* Adjust the size as needed */
+    font-size: 20px; /* Adjust the size as needed */
     text-align: center;
     width: 100%;
     position: absolute;
@@ -96,8 +100,9 @@
 }
 
 .pSchedSubText {
-    font-size: 12px;
+    font-size: 10px;
     color: black;
     font-family: 'lulo-one', sans-serif;
     margin-top: 50px;
+    text-align: center;
 }

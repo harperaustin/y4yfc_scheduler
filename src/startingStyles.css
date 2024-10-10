@@ -2,52 +2,59 @@
 
 body {
     margin: 0;
-    font-family: 'Lulo One', sans-serif; /* Use your desired font */
-    background-color: #ffffff; /* Light blue background */
+    font-family: 'Lulo One', sans-serif;
+    background-color: #ffffff;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    padding: 20px; /* Add some padding for smaller screens */
 }
 
 .starting-screen {
     text-align: center;
-    background-color: #ffffff; /* White background for the content */
-    border-radius: 15px; /* Rounded corners */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     padding: 40px;
-    width: 90%; /* Responsive width */
-    max-width: 400px; /* Maximum width */
+    width: 90%; /* Increase width for smaller screens */
+    max-width: 400px;
 }
 
 .logo {
-    width: 100%; /* Responsive logo */
+    width: 60%; /* Make the logo smaller for mobile */
     height: auto;
-    margin-bottom: 20px; /* Space between logo and title */
+    margin-bottom: 20px;
 }
 
 .title {
-    font-size: 2.5em; /* Larger font size for the title */
-    margin: 0 0 20px; /* Space below the title */
-    color: #000000; /* Dark text color */
+    font-size: 1.8em; /* Slightly smaller on mobile */
+    margin: 0 0 20px;
+    color: #000000;
+    text-align: center;
 }
 
 .button-container {
-    display: flex; /* Flexbox for buttons */
-    flex-direction: column; /* Stack buttons vertically */
-    gap: 15px; /* Space between buttons */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.start-centerer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .action-button {
     font-family: 'lulo-one';
     background-color: #282828;
-    color: white; /* White text */
-    border: none; /* Remove default border */
-    border-radius: 5px; /* Rounded corners */
-    padding: 10px 20px; /* Padding around text */
-    font-size: 1.2em; /* Font size for buttons */
-    cursor: pointer; /* Pointer cursor on hover */
-    transition: background-color 0.3s, transform 0.2s; /* Smooth transition */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 18px; /* Reduce padding slightly for mobile */
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 .action-button:hover {
@@ -56,5 +63,26 @@ body {
 }
 
 .action-button:focus {
-    outline: none; /* Remove outline on focus */
+    outline: none;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .starting-screen {
+        width: 80%;
+        padding: 20px;
+    }
+
+    .logo {
+        width: 50%; /* Make the logo even smaller on small screens */
+    }
+
+    .title {
+        font-size: 1.5em; /* Smaller title */
+    }
+
+    .action-button {
+        padding: 10px 15px; /* Smaller buttons */
+        font-size: 0.9em; /* Slightly smaller text */
+    }
 }

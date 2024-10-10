@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./styles.css"; 
 
 const Calendar = () => {
@@ -22,6 +22,7 @@ const Calendar = () => {
 
     const [clickedRectangles, setClickedRectangles] = useState(Array(rows).fill(Array(cols).fill(false)));
     const [isMouseDown, setIsMouseDown] = useState(false);
+    const isDragging = useRef(false);
 
     const handleClick = (row, col) => {
         if (row > 0 && col > 0) { // Only handle clicks for the inner grid
@@ -34,7 +35,9 @@ const Calendar = () => {
     };
 
     const handleMouseDown = (row, col) => {
+        // console.log("Mouse Down: row %d, col %d", row, col)
         setIsMouseDown(true);
+        isDragging.current = true;
         handleClick(row, col); // Click the rectangle
     };
     
@@ -50,6 +53,37 @@ const Calendar = () => {
     
     const handleMouseUp = () => {
         setIsMouseDown(false); // Release the mouse
+        isDragging.current = false;
+    };
+
+    const handleTouchStart = (row, col) =>  {
+        console.log("Touch Start: %d/%d", row, col)
+        handleMouseDown(row, col); // Handle touch as mouse down
+    };
+    
+    const handleTouchMove = (event) => {
+        const touch = event.touches[0]
+        console.log('x: %d, y: %d', touch.clientX, touch.clientY)
+        const calc_y = touch.clientY - 100;
+        const calc_x = touch.clientX - ((window.innerWidth - (8 * (0.1 * window.innerWidth)))/2);
+        console.log('calc x: %d,  calc y: %d', calc_x, calc_y);
+        const rect_width = window.innerWidth * 0.1;
+        const rect_height = window.innerHeight * 0.0225;
+        const calc_row = Math.floor(calc_y / rect_height);
+        const calc_col = Math.floor(calc_x / rect_width)
+        console.log('calc row: %d,  calc col: %d', calc_row, calc_col);
+        if (calc_row < 32 && calc_row > 0 && calc_col < 8 && calc_row > 0){
+            handleMouseEnter(calc_row,calc_col);
+        }
+        
+        // WE GOTTA CALCULATE WHAT RECTANGLE WE AT BASED OFF THE X and Y OF DRAG
+
+
+    };
+    
+    const handleTouchEnd = (event) => {
+        event.preventDefault();
+        handleMouseUp(); // Release the touch
     };
 
     const today = new Date();
@@ -58,6 +92,7 @@ const Calendar = () => {
     useEffect(() => {
         const handleDocumentMouseUp = () => {
             setIsMouseDown(false);
+            isDragging.current = false;
         };
     
         document.addEventListener("mouseup", handleDocumentMouseUp);
@@ -109,6 +144,9 @@ const Calendar = () => {
     onMouseDown={() => handleMouseDown(row, col)}
     onMouseEnter={() => handleMouseEnter(row,col)}
     onMouseUp={handleMouseUp}
+    onTouchStart={() => handleTouchStart(row, col)}
+    onTouchMove={handleTouchMove}
+    onTouchEnd={handleTouchEnd}
     >
         {((col === 0 && row !== 0) && (
             <span className="label">{timeLabels[row - 1]}</span>
