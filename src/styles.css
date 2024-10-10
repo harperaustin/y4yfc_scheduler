@@ -1,24 +1,103 @@
+@import url("https://use.typekit.net/wds8mao.css");
+
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(8, 100px); /* 5 columns */
-    grid-template-rows: repeat(32, 20px);    /* 4 rows */
+    grid-template-columns: repeat(8, 9vw); /* 5 columns */
+    grid-template-rows: repeat(32, 2.5vh);    /* 4 rows */
     user-select: none;
 }
 
 .rectangle {
-    border: 1px solid black;
+    border-right: 3px solid black;
+    border-left: 3px solid black;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 20px;
-    width: 100px;
+    height: 2.5vh;
+    width: 9vw;
 }
 
 .label {
-    font-size: 14px;
-    color: black
+    font-size: 1vw;
+    color: black;
+    font-family: 'lulo-one', sans-serif;
+    font-weight: bold;
+}
+
+.daylabel {
+    font-size: 1vw;
+    color: #000000;
+    font-family: 'lulo-one', sans-serif;
+    font-weight: bold;
 }
 
 .timeLabel {
     pointer-events: none;
+    font-family: Verdana;
+    font-size: 0.75vw;
+}
+
+
+.schedDiv {
+    position: relative; /* To contain the absolute positioning */
+    height: 100vh; /* Full viewport height */
+}
+
+.pSched {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100px; /* Or adjust to your preferred height */
+    position: relative;
+}
+.calDiv {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+.pSched button {
+    position: absolute;
+    top: 29px;
+    left: -182px;
+    background-color: #000000; /* 46be3e */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
+    font-family: 'lulo-one', sans-serif;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s; /* Smooth transition effect */
+}
+
+/* Change background color and text color on hover */
+.pSched button:hover {
+    background-color: #ff0000; /* Change to red on hover */
+    color: #ffffff; /* Optionally change text color too */
+    transform: scale(1.05);
+}
+.pSchedText {
+    pointer-events: none;
+    font-size: 15px;
+    color: black;
+    font-family: 'lulo-one', sans-serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 24px; /* Adjust the size as needed */
+    text-align: center;
+    width: 100%;
+    position: absolute;
+    top: 10px;
+}
+
+.pSchedSubText {
+    font-size: 12px;
+    color: black;
+    font-family: 'lulo-one', sans-serif;
+    margin-top: 50px;
 }

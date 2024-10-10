@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./styles.css"; // Import your CSS file
+import "./styles.css"; 
 
 const Calendar = () => {
   // Set the number of rows and columns
@@ -13,11 +13,11 @@ const Calendar = () => {
         "12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM", "2:00 PM", "2:30 PM",
         "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM", "5:00 PM", "5:30 PM", 
         "6:00 PM", "6:30 PM", "7:00 PM", "7:30 PM", "8:00 PM", "8:30 PM",
-        "9:00 PM",
+        "9:00 PM", "9:30 PM"
     ]
 
     const dayLabels = [
-        "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
+        "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"
     ]
 
     const [clickedRectangles, setClickedRectangles] = useState(Array(rows).fill(Array(cols).fill(false)));
@@ -67,6 +67,19 @@ const Calendar = () => {
         };
     }, []);
 
+    const findTimeRanges = (row, col) => {
+        const start_time = timeLabels[row - 1];
+        let cur_row = row + 1;
+        for(; cur_row < 31; cur_row ++){
+            if (!clickedRectangles[cur_row][col]){
+                break;
+            }
+        }
+
+        const end_time = timeLabels[cur_row - 1]
+        return `${start_time} - ${end_time}`;
+    }
+
 
 
   const grid = Array.from({ length: rows * cols }, (_, index) => {
@@ -78,12 +91,14 @@ const Calendar = () => {
     let backgroundColor;
     if (row === 0 || col === 0) {
       backgroundColor = "#d3d3d3"; // Grey for first row and column
+    } else if (col === 1) {
+    backgroundColor = clickedRectangles[row][col] ? "#32d637" : "#FFF59e";
     } else {
-        backgroundColor = clickedRectangles[row][col] ? "#90EE90" : "#FFFFFF"; // White for other rectangles
+        backgroundColor = clickedRectangles[row][col] ? "#32d637" : "#FFFFFF"; // White for other rectangles
     }
 
     const isClicked = clickedRectangles[row][col];
-    const time = timeLabels[row - 1];
+
 
 
     return (
@@ -99,11 +114,11 @@ const Calendar = () => {
             <span className="label">{timeLabels[row - 1]}</span>
         )) || ((row === 0 && col !== 0) && (
             <div>
-                <span className="label">{dayLabels[(col - 2 + currentDay) % 7]}</span>
-                <span className="label"> {date.toLocaleDateString(undefined, {month:"numeric", day: 'numeric'})} </span>
+                <span className="daylabel">{dayLabels[(col - 2 + currentDay) % 7]}</span>
+                <span className="daylabel"> {date.toLocaleDateString(undefined, {month:"numeric", day: 'numeric'})} </span>
             </div>
-            )) || ((isClicked && (
-                <span className="timeLabel">{time}</span>
+            )) || (isClicked && ((row === 1 || !clickedRectangles[row-1][col]) && (
+                <span className="timeLabel">{findTimeRanges(row, col)}</span> 
             )))
         }
     </div>

@@ -1,0 +1,60 @@
+@import url("https://use.typekit.net/wds8mao.css");
+
+body {
+    margin: 0;
+    font-family: 'Lulo One', sans-serif; /* Use your desired font */
+    background-color: #ffffff; /* Light blue background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.starting-screen {
+    text-align: center;
+    background-color: #ffffff; /* White background for the content */
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    padding: 40px;
+    width: 90%; /* Responsive width */
+    max-width: 400px; /* Maximum width */
+}
+
+.logo {
+    width: 100%; /* Responsive logo */
+    height: auto;
+    margin-bottom: 20px; /* Space between logo and title */
+}
+
+.title {
+    font-size: 2.5em; /* Larger font size for the title */
+    margin: 0 0 20px; /* Space below the title */
+    color: #000000; /* Dark text color */
+}
+
+.button-container {
+    display: flex; /* Flexbox for buttons */
+    flex-direction: column; /* Stack buttons vertically */
+    gap: 15px; /* Space between buttons */
+}
+
+.action-button {
+    font-family: 'lulo-one';
+    background-color: #282828;
+    color: white; /* White text */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px 20px; /* Padding around text */
+    font-size: 1.2em; /* Font size for buttons */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s, transform 0.2s; /* Smooth transition */
+}
+
+.action-button:hover {
+    background-color: #7b7b7b;
+    transform: scale(1.05);
+}
+
+.action-button:focus {
+    outline: none; /* Remove outline on focus */
+}

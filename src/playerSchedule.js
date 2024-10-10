@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './styles.css';
 import Calendar from "./calendar"
 
@@ -10,13 +10,15 @@ function PlayerSchedule( {onBack} ){
     
     
     return (
-        <div>
-            <h1>
-                <button onClick={onBack}>GoBack</button>
-                Player Schedule  
-            </h1>
-
-            <Calendar />
+        <div className='schedDiv'>
+            <div className='pSched'>
+                <button onClick={onBack}>Back</button>
+                <h1 className='pSchedText'>Player Schedule</h1>
+                <h2 className='pSchedSubText'>Click or drag over time slots to indicate your availability</h2>
+            </div>
+            <div className='calDiv'>
+                <Calendar />
+            </div>
         </div>
     );
 }

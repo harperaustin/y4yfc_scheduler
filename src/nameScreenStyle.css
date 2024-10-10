@@ -1,0 +1,90 @@
+@import url("https://use.typekit.net/wds8mao.css");
+
+body {
+    font-family: 'lulo-one'; /* Modern and clean font */
+    background-color: #f4f4f9; /* Light background color */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full screen height */
+}
+
+/* Container for the name screen */
+.nameScreenContainer {
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 90%;
+    max-width: 400px; /* Responsive max width */
+}
+
+/* Styling for headings */
+.nameScreenContainer h1 {
+    font-size: 28px;
+    color: #2c3e50; /* Dark color */
+    margin-bottom: 20px;
+}
+
+.nameScreenContainer h2 {
+    font-size: 18px;
+    color: #7f8c8d; /* Lighter shade for subheadings */
+    margin-bottom: 10px;
+}
+
+/* Input fields styling */
+.nameScreenContainer input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #bdc3c7;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+.nameScreenContainer input:focus {
+    border-color: #3498db; /* Light blue border when focused */
+    outline: none;
+}
+
+/* Button styling */
+.nameScreenContainer button {
+    font-family: 'lulo-one';
+    background-color: #000000; /* Primary blue */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    margin: 10px 0;
+}
+
+.nameScreenContainer button:hover {
+    background-color: #828282; /* Darker blue on hover */
+    transform: scale(1.05); /* Small zoom effect */
+}
+
+/* Position the 'Go Back' button */
+.nameScreenContainer .backButton {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: #000000; /* Red for Go Back */
+}
+
+.nameScreenContainer .backButton:hover {
+    background-color: #ff0000; /* Darker red on hover */
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+}
