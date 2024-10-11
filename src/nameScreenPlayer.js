@@ -21,19 +21,12 @@ function NameScreenPlayer({ onBack, onContinue }) {
     };
 
     const handleAgeChange = (e) => {
-        const value = e.target.value;
-        if (value === '' || (Number(value) >= 0 && Number(value) <= 50)) {
-            setAge(value);
-            setError(''); // Clear any previous errors
-        } else {
-            setAge(value);
-            setError('Age must be between 0 and 50');
-        }
+        setAge(e.target.value);
     };
 
     const handleCont = () => {
-        if (name === '' || error !== '') {
-            setError('Please fill in fields correctly'); // Show error if fields are empty
+        if (name === '') {
+            setError('Please enter name'); // Show error if fields are empty
         } else {
             setError(''); // Clear error if validation passes
             onContinue(name, age); // Pass both name and age

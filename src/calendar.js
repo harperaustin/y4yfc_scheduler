@@ -76,7 +76,6 @@ const Calendar = () => {
             handleMouseEnter(calc_row,calc_col);
         }
         
-        // WE GOTTA CALCULATE WHAT RECTANGLE WE AT BASED OFF THE X and Y OF DRAG
 
 
     };
@@ -121,13 +120,11 @@ const Calendar = () => {
     const row = Math.floor(index / cols);  // Calculate the row index
     const col = index % cols;              // Calculate the column index
     const date = new Date(today)
-    date.setDate(today.getDate() + (col - 1))
+    date.setDate(today.getDate() + (col))
 
     let backgroundColor;
     if (row === 0 || col === 0) {
       backgroundColor = "#d3d3d3"; // Grey for first row and column
-    } else if (col === 1) {
-    backgroundColor = clickedRectangles[row][col] ? "#32d637" : "#FFF59e";
     } else {
         backgroundColor = clickedRectangles[row][col] ? "#32d637" : "#FFFFFF"; // White for other rectangles
     }
@@ -137,6 +134,7 @@ const Calendar = () => {
 
 
     return (
+    <div>
     <div key={index}
     className="rectangle" 
     style={{backgroundColor}} 
@@ -152,13 +150,14 @@ const Calendar = () => {
             <span className="label">{timeLabels[row - 1]}</span>
         )) || ((row === 0 && col !== 0) && (
             <div>
-                <span className="daylabel">{dayLabels[(col - 2 + currentDay) % 7]}</span>
+                <span className="daylabel">{dayLabels[(col - 1 + currentDay) % 7]}</span>
                 <span className="daylabel"> {date.toLocaleDateString(undefined, {month:"numeric", day: 'numeric'})} </span>
             </div>
             )) || (isClicked && ((row === 1 || !clickedRectangles[row-1][col]) && (
                 <span className="timeLabel">{findTimeRanges(row, col)}</span> 
             )))
         }
+    </div>
     </div>
     );
 });
