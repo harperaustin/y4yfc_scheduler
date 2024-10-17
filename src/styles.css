@@ -3,24 +3,22 @@
 .grid-container {
     display: grid;
     grid-template-columns: repeat(8, 10vw); /* 5 columns */
-    grid-template-rows: repeat(32, 2.25vh);    /* 4 rows */
+    grid-template-rows: repeat(33, 2.5vh);    /* 4 rows */
     user-select: none;
 }
-.schedDiv {
-    overflow: hidden;
-     /* Prevent default scrolling on touch devices */
-}
+
 
 .rectangle {
-    border: 1px solid rgb(210, 210, 210);
+    /* border: 1px solid #868686; */
 
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 2.25vh;
+    height: 2.5vh;
     width: 10vw;
     touch-action: none;
 }
+
 
 .label {
     font-size: 0.7vh;
@@ -30,17 +28,34 @@
 }
 
 .daylabel {
-    font-size: 0.55vh;
+    font-size: 0.8vh;
     color: #000000;
     font-family: 'lulo-one', sans-serif;
     font-weight: bold;
 }
 
+/* For screens wider than 768px (average tablet size) */
+@media (min-width: 768px) {
+    .daylabel, .label {
+        font-size: 0.9vw; /* Increase font size */
+    }
+}
+.spacerDiv {
+    height: 30px;
+}
 .timeLabel {
     pointer-events: none;
     font-family: Verdana;
-    font-size: 0.8vh;
+    font-size: 0.7vh;
 }
+
+/* For screens wider than 768px (average tablet size) */
+@media (min-width: 768px) {
+    .timeLabel {
+        font-size: 0.8vw; /* Increase font size */
+    }
+}
+
 
 
 .schedDiv {
@@ -53,7 +68,7 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    height: 100px; /* Or adjust to your preferred height */
+    height: 75px;
     position: relative;
 }
 .calDiv {

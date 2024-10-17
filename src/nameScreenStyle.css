@@ -12,18 +12,19 @@ body {
 }
 
 .continue-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
     font-family: 'lulo-one';
-    width: 80%;
-    max-width: 300px;
-    padding: 12px 20px;
-    font-size: 1em;
-    background-color: #a9a7a7; /* Green background */
-    color: rgb(255, 255, 255); /* White text */
-    border: none; /* Remove default border */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor */
-    transition: background-color 0.3s ease, transform 0.2s; /* Smooth transition */
-    margin: 50px 0px;
+    background-color: #000000;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    margin: 5px 0; /* Red for Go Back */
 }
 
 .continue-button:hover {
@@ -33,7 +34,7 @@ body {
 
 /* Container for the name screen */
 .nameScreenContainer {
-    margin-top: 550px;
+    margin-top: 450px;
     background-color: rgb(255, 255, 255);
     padding: 40px;
     border-radius: 10px;
@@ -51,7 +52,7 @@ body {
 
 /* Styling for headings */
 .nameScreenContainer h1 {
-    font-size: 28px;
+    font-size: 25px;
     color: #2c3e50; /* Dark color */
     margin-bottom: 20px;
 }

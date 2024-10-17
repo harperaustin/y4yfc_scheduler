@@ -2,8 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import "./styles.css"; 
 
 const Calendar = () => {
+
   // Set the number of rows and columns
-    const rows = 32;
+    const rows = 33;
     const cols = 8;
   // Generate the grid as an array of rectangles
 
@@ -22,10 +23,11 @@ const Calendar = () => {
 
     const [clickedRectangles, setClickedRectangles] = useState(Array(rows).fill(Array(cols).fill(false)));
     const [isMouseDown, setIsMouseDown] = useState(false);
+    const [initialDragState, setInitialDragState] = useState(null);
     const isDragging = useRef(false);
 
     const handleClick = (row, col) => {
-        if (row > 0 && col > 0) { // Only handle clicks for the inner grid
+        if (row > 1 && col > 0) { // Only handle clicks for the inner grid
             setClickedRectangles(prev => {
                 const newRectangles = prev.map(row => [...row]); // Create a copy of the current state
                 newRectangles[row][col] = !newRectangles[row][col]; // Toggle clicked state
@@ -37,17 +39,20 @@ const Calendar = () => {
     const handleMouseDown = (row, col) => {
         // console.log("Mouse Down: row %d, col %d", row, col)
         setIsMouseDown(true);
+        setInitialDragState(clickedRectangles[row][col]);
         isDragging.current = true;
         handleClick(row, col); // Click the rectangle
     };
     
     const handleMouseEnter = (row, col) => {
         if (isMouseDown) {
-            setClickedRectangles(prev => {
-            const newRectangles = prev.map(r => [...r]); // Create a copy of the current state
-            newRectangles[row][col] = true; // Ensure this rectangle is green (selected)
-            return newRectangles;
+            if (row > 1 && col > 0) {
+                setClickedRectangles(prev => {
+                const newRectangles = prev.map(r => [...r]); // Create a copy of the current state
+                newRectangles[row][col] = newRectangles[row][col] = !initialDragState; // Ensure this rectangle is green (selected)
+                return newRectangles;
         });
+        }
         }
     };
     
@@ -60,25 +65,48 @@ const Calendar = () => {
         console.log("Touch Start: %d/%d", row, col)
         handleMouseDown(row, col); // Handle touch as mouse down
     };
-    
+
     const handleTouchMove = (event) => {
         const touch = event.touches[0]
         console.log('x: %d, y: %d', touch.clientX, touch.clientY)
-        const calc_y = touch.clientY - 100;
-        const calc_x = touch.clientX - ((window.innerWidth - (8 * (0.1 * window.innerWidth)))/2);
-        console.log('calc x: %d,  calc y: %d', calc_x, calc_y);
+
+        const calendarElement = document.querySelector('.calDiv');
+        const calendarRect = calendarElement.getBoundingClientRect();
+        const touchY = event.touches[0].clientY;
+        let calc_y = touchY - calendarRect.top;
+
+        
+
+        //const touchY = touch.clientY + window.scrollY
+        const rect_height = window.innerHeight * 0.025;
         const rect_width = window.innerWidth * 0.1;
-        const rect_height = window.innerHeight * 0.0225;
-        const calc_row = Math.floor(calc_y / rect_height);
-        const calc_col = Math.floor(calc_x / rect_width)
-        console.log('calc row: %d,  calc col: %d', calc_row, calc_col);
-        if (calc_row < 32 && calc_row > 0 && calc_col < 8 && calc_row > 0){
-            handleMouseEnter(calc_row,calc_col);
+        
+        if (calc_y > 8*rect_height){
+            calc_y -= rect_height;
+        }
+        if (calc_y > 15*rect_height){
+            calc_y -= rect_height;
+        }
+        if (calc_y > 19*rect_height){
+            calc_y -= rect_height;
+        }
+        if (calc_y > 26*rect_height){
+            calc_y -= rect_height;
         }
         
 
-
+        //const calc_y = touchY - (75 + (2 * rect_height)); // FIND CORRECT MULTIPLY VALUE!!!
+        const calc_x = touch.clientX - ((window.innerWidth - (8 * (0.1 * window.innerWidth)))/2);
+        console.log('calc x: %d,  calc y: %d', calc_x, calc_y);
+        
+        const calc_row = Math.floor(calc_y / rect_height);
+        const calc_col = Math.floor(calc_x / rect_width)
+        console.log('calc row: %d,  calc col: %d', calc_row, calc_col);
+        if (calc_row < 33 && calc_row > 0 && calc_col < 8 && calc_row > 1){
+            handleMouseEnter(calc_row,calc_col);
+        }
     };
+
     
     const handleTouchEnd = (event) => {
         event.preventDefault();
@@ -102,15 +130,15 @@ const Calendar = () => {
     }, []);
 
     const findTimeRanges = (row, col) => {
-        const start_time = timeLabels[row - 1];
+        const start_time = timeLabels[row - 2];
         let cur_row = row + 1;
-        for(; cur_row < 31; cur_row ++){
+        for(; cur_row < 32; cur_row ++){
             if (!clickedRectangles[cur_row][col]){
                 break;
             }
         }
 
-        const end_time = timeLabels[cur_row - 1]
+        const end_time = timeLabels[cur_row - 2]
         return `${start_time} - ${end_time}`;
     }
 
@@ -123,11 +151,33 @@ const Calendar = () => {
     date.setDate(today.getDate() + (col))
 
     let backgroundColor;
-    if (row === 0 || col === 0) {
-      backgroundColor = "#d3d3d3"; // Grey for first row and column
+    let borderTop;
+    let borderLeft;
+    let borderBottom;
+    let borderRight;
+    if (row === 0 || row === 1 || col === 0) {
+        backgroundColor = "#d3d3d3"; // Grey for first row and column
+        borderTop = "1px solid #d3d3d3"
+        borderLeft = "1px solid #d3d3d3"
+        borderBottom = "1px solid #d3d3d3"
+        borderRight = "1px solid #d3d3d3"
     } else {
         backgroundColor = clickedRectangles[row][col] ? "#32d637" : "#FFFFFF"; // White for other rectangles
+        borderTop = clickedRectangles[row][col] ? 'none' : "1px solid #d3d3d3";
+        borderLeft = clickedRectangles[row][col] ? '1px solid #000000' : "1px solid #d3d3d3";
+        borderRight = clickedRectangles[row][col] ? '1px solid #000000' : "1px solid #d3d3d3";
+        if ((row > 2 && !clickedRectangles[row - 1][col] && clickedRectangles[row][col]) || (row === 2 && clickedRectangles[row][col]) || 
+        (row > 2 && !clickedRectangles[row][col] && clickedRectangles[row - 1][col])){
+            borderTop = '1px solid #000000';
+        }
+        if (col > 1 && clickedRectangles[row][col - 1]){
+            borderLeft = '1px solid #000000';
+        }
+        if (row === 32 && clickedRectangles[row][col]){
+            borderBottom = "1px solid #000000"
+        }
     }
+    
 
     const isClicked = clickedRectangles[row][col];
 
@@ -137,7 +187,7 @@ const Calendar = () => {
     <div>
     <div key={index}
     className="rectangle" 
-    style={{backgroundColor}} 
+    style={{backgroundColor, borderTop, borderLeft, borderRight, borderBottom}} 
     
     onMouseDown={() => handleMouseDown(row, col)}
     onMouseEnter={() => handleMouseEnter(row,col)}
@@ -145,15 +195,18 @@ const Calendar = () => {
     onTouchStart={() => handleTouchStart(row, col)}
     onTouchMove={handleTouchMove}
     onTouchEnd={handleTouchEnd}
-    >
-        {((col === 0 && row !== 0) && (
-            <span className="label">{timeLabels[row - 1]}</span>
+    > 
+        {((col === 0 && row > 1) && (
+            <span className="label">{timeLabels[row - 2]}</span>
         )) || ((row === 0 && col !== 0) && (
             <div>
                 <span className="daylabel">{dayLabels[(col - 1 + currentDay) % 7]}</span>
-                <span className="daylabel"> {date.toLocaleDateString(undefined, {month:"numeric", day: 'numeric'})} </span>
             </div>
-            )) || (isClicked && ((row === 1 || !clickedRectangles[row-1][col]) && (
+            )) || ((row === 1 & col !== 0) && (
+                <div>
+                    <span className="daylabel"> {date.toLocaleDateString(undefined, {month:"numeric", day: 'numeric'})} </span>
+                </div>
+            )) || (isClicked && ((row === 1 || !clickedRectangles[row - 1][col]) && (
                 <span className="timeLabel">{findTimeRanges(row, col)}</span> 
             )))
         }

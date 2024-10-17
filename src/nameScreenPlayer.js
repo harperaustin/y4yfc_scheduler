@@ -36,13 +36,15 @@ function NameScreenPlayer({ onBack, onContinue }) {
         <div className='nameScreenCenterer'>
         <div className="nameScreenContainer">
             <button onClick={onBack} className="backButton">Back</button>
+            <button className="continue-button" onClick={handleCont}>Continue</button>
+            {error && <p className="error-message">{error}</p>} {/* Display error message */}
             <h1>Player Information</h1>
             <h2>Name</h2>
             <input
                 type="text"
                 value={name}
                 onChange={handleNameChange}
-                placeholder="Player Name (required)"
+                placeholder="Player Name(s) (required)"
 
             />
             <h2>Age</h2>
@@ -89,8 +91,8 @@ function NameScreenPlayer({ onBack, onContinue }) {
                 </button>
             </div>
 
-            {error && <p className="error-message">{error}</p>} {/* Display error message */}
-            <button className="continue-button" onClick={handleCont}>Continue</button>
+            
+            
         </div>
         
         </div>

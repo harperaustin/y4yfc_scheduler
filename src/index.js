@@ -5,6 +5,7 @@ import NameScreenPlayer from './nameScreenPlayer';
 import NameScreenCoach from './nameScreenCoach';
 import PlayerSchedule from './playerSchedule';
 import CoachSchedule from './coachSchedule';
+import ThankYou from './thank_you';
 
 
 
@@ -37,14 +38,16 @@ function App() {
       case 'PlayerSchedule':
         return <PlayerSchedule onBack={
           () => {setCurrentScreen('NameScreenPlayer');}
-
         }
+        onSubmit={() => setCurrentScreen('ThankYou')}
         />
       case 'CoachSchedule':
         return <CoachSchedule onBack={
           () => {setCurrentScreen('NameScreenCoach')}
         }
         />
+      case 'ThankYou':
+        return <ThankYou/>
       default:
         return <h1>YFYFC</h1>
     }
