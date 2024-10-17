@@ -46,7 +46,7 @@
 .timeLabel {
     pointer-events: none;
     font-family: Verdana;
-    font-size: 0.7vh;
+    font-size: 0.8vh;
 }
 
 /* For screens wider than 768px (average tablet size) */
@@ -75,7 +75,9 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
+    margin-top: 20px;
 }
+
 .pSched button {
     position: absolute;
     top: 29px;
@@ -179,6 +181,3 @@
     text-align: center; /* Center align text */
 }
 
-.calDiv {
-    margin-top: 20px; /* Space above calendar */
-}

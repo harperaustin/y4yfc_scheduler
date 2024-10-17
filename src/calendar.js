@@ -157,10 +157,10 @@ const Calendar = () => {
     let borderRight;
     if (row === 0 || row === 1 || col === 0) {
         backgroundColor = "#d3d3d3"; // Grey for first row and column
-        borderTop = "1px solid #d3d3d3"
-        borderLeft = "1px solid #d3d3d3"
-        borderBottom = "1px solid #d3d3d3"
-        borderRight = "1px solid #d3d3d3"
+        borderTop = "1px solid #767676"
+        borderLeft = "1px solid #767676"
+        borderBottom = "1px solid #767676"
+        borderRight = "1px solid #767676"
     } else {
         backgroundColor = clickedRectangles[row][col] ? "#32d637" : "#FFFFFF"; // White for other rectangles
         borderTop = clickedRectangles[row][col] ? 'none' : "1px solid #d3d3d3";
