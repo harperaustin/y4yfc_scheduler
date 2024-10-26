@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './nameScreenStyle.css';
+import { usePlayerInfo } from './playerContext';
 
 function NameScreenPlayer({ onBack, onContinue }) {
     const [name, setName] = useState('');
@@ -7,10 +8,20 @@ function NameScreenPlayer({ onBack, onContinue }) {
     const [error, setError] = useState('');
     const [selectedLoc, setSelectedLoc] = useState(null);
     const [selectedSesh, setSelectedSesh] = useState(null);
+    const [otherLocation, setOtherLocation] = useState('');
+    const { setPlayerInfo } = usePlayerInfo();
 
     const handleLocClick = (loc) => {
         setSelectedLoc(loc); // Update state when a button is clicked
+        if (loc !== 'Other'){
+            setOtherLocation('');
+        }
     };
+
+    const handleOtherLocationChange = (e) => {
+        setSelectedLoc('Other')
+        setOtherLocation(e.target.value);
+    }
 
     const handleSeshClick = (sesh) => {
         setSelectedSesh(sesh); // Update state when a button is clicked
@@ -29,6 +40,8 @@ function NameScreenPlayer({ onBack, onContinue }) {
             setError('Please enter name'); // Show error if fields are empty
         } else {
             setError(''); // Clear error if validation passes
+            const location = selectedLoc === 'Other' ? otherLocation : selectedLoc;
+            setPlayerInfo({ name, age, location, sessionType: selectedSesh });
             onContinue(name, age); // Pass both name and age
         }
     };
@@ -74,10 +87,7 @@ function NameScreenPlayer({ onBack, onContinue }) {
                     onClick={() => handleLocClick('Bronx')} >
                     Bronx
                 </button>
-                <button className={`loc-button ${selectedLoc === 'Other' ? 'selected' : ''}`}
-                    onClick={() => handleLocClick('Other')} >
-                    Other
-                </button>
+                <input className='other-input' value={otherLocation} type="text" placeholder='Other location' onChange={handleOtherLocationChange}/>
             </div>
             <h2>Session Type</h2>
             <div className='location-selection'>

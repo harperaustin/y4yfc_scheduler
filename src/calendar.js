@@ -67,6 +67,19 @@ const Calendar = () => {
     };
 
     const handleTouchMove = (event) => {
+
+        //const target = event.target;
+        const touch = event.touches[0];
+        const target = document.elementFromPoint(touch.clientX, touch.clientY);
+        if (target && target.classList.contains('rectangle')) {
+            const row = parseInt(target.getAttribute('data-row'), 10);
+            const col = parseInt(target.getAttribute('data-col'), 10);
+            console.log('row: %d, col: %d', row, col)
+            if (row < 33 && row > 0 && col < 8 && row > 1) {
+                handleMouseEnter(row, col);
+            }
+        }
+        /*
         const touch = event.touches[0]
         console.log('x: %d, y: %d', touch.clientX, touch.clientY)
 
@@ -105,6 +118,7 @@ const Calendar = () => {
         if (calc_row < 33 && calc_row > 0 && calc_col < 8 && calc_row > 1){
             handleMouseEnter(calc_row,calc_col);
         }
+        */
     };
 
     
@@ -188,7 +202,10 @@ const Calendar = () => {
     <div key={index}
     className="rectangle" 
     style={{backgroundColor, borderTop, borderLeft, borderRight, borderBottom}} 
-    
+
+    data-row={row}
+    data-col={col}
+
     onMouseDown={() => handleMouseDown(row, col)}
     onMouseEnter={() => handleMouseEnter(row,col)}
     onMouseUp={handleMouseUp}
@@ -215,7 +232,10 @@ const Calendar = () => {
     );
 });
 
-    return <div className="grid-container">{grid}</div>;
+    return (
+    <div className="calDiv" onMouseUp={handleMouseUp}>
+        <div className="grid-container">{grid}</div>
+    </div>)
 };
 
 export default Calendar;

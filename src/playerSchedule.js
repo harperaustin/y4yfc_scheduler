@@ -1,13 +1,13 @@
 import React from 'react';
 import './styles.css';
 import Calendar from "./calendar";
-
+import { usePlayerInfo } from './playerContext';
 
 
 
 function PlayerSchedule( {onBack, onSubmit} ){
-
-
+    const {playerInfo} = usePlayerInfo();
+    console.log(playerInfo)
     
     
     return (

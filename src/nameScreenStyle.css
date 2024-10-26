@@ -62,10 +62,12 @@ body {
     color: #7f8c8d; /* Lighter shade for subheadings */
     margin-bottom: 10px;
 }
-
+.other-input {
+    width: 200px !important;
+}
 /* Input fields styling */
 .nameScreenContainer input {
-    width: 100%;
+    width: 250px;
     padding: 10px;
     margin-bottom: 20px;
     border-radius: 5px;
@@ -79,6 +81,8 @@ body {
     border-color: #3498db; /* Light blue border when focused */
     outline: none;
 }
+
+
 
 /* Button styling */
 .loc-button {

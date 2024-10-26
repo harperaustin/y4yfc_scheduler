@@ -6,6 +6,7 @@ import NameScreenCoach from './nameScreenCoach';
 import PlayerSchedule from './playerSchedule';
 import CoachSchedule from './coachSchedule';
 import ThankYou from './thank_you';
+import { PlayerProvider } from './playerContext';
 
 
 
@@ -39,7 +40,7 @@ function App() {
         return <PlayerSchedule onBack={
           () => {setCurrentScreen('NameScreenPlayer');}
         }
-        onSubmit={() => setCurrentScreen('ThankYou')}
+        onSubmit={() => {setCurrentScreen('ThankYou')}}
         />
       case 'CoachSchedule':
         return <CoachSchedule onBack={
@@ -64,7 +65,10 @@ function App() {
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <PlayerProvider>
+      <App />
+    </PlayerProvider>
+    
   </React.StrictMode>
 );
 
