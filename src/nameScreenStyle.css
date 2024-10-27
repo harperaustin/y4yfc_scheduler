@@ -35,6 +35,7 @@ body {
 /* Container for the name screen */
 .nameScreenContainer {
     margin-top: 450px;
+    margin-bottom: 50px;
     background-color: rgb(255, 255, 255);
     padding: 40px;
     border-radius: 10px;

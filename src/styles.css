@@ -2,19 +2,19 @@
 
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(8, 10vw); /* 5 columns */
-    grid-template-rows: repeat(33, 2.5vh);    /* 4 rows */
+    grid-template-columns: repeat(8, 10vw); /* 8 columns */
+    grid-template-rows: repeat(29, 2.75vh);    /* 29 rows */
     user-select: none;
 }
 
 
 .rectangle {
-    /* border: 1px solid #868686; */
+
 
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 2.5vh;
+    height: 2.75vh;
     width: 10vw;
     touch-action: none;
 }
@@ -56,6 +56,9 @@
     }
 }
 
+.extraSpacing {
+    height: 400px;
+}
 
 
 .schedDiv {
@@ -76,6 +79,7 @@
     justify-content: center;
     align-items: flex-start;
     margin-top: 20px;
+    margin-bottom: 40px;
 }
 
 .pSched button {
@@ -131,7 +135,6 @@
     width: 100vw; /* Full viewport width */
     height: 100vh; /* Full viewport height, if needed */
     position: relative; /* For absolute positioning */
-    overflow: hidden; /* Hide overflow if necessary */
     box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
 

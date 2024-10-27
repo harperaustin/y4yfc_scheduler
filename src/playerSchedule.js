@@ -25,7 +25,7 @@ function PlayerSchedule( {onBack, onSubmit} ){
             <div className='calDiv'>
                 <Calendar />
             </div>
-
+            <div className='extraSpacing'> </div>
         </div>
 
     );

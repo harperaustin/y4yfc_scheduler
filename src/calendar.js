@@ -4,17 +4,17 @@ import "./styles.css";
 const Calendar = () => {
 
   // Set the number of rows and columns
-    const rows = 33;
+    const rows = 29;
     const cols = 8;
   // Generate the grid as an array of rectangles
 
     const timeLabels = [
-        "6:00 AM", "6:30 AM", "7:00 AM", "7:30 AM", "8:00 AM", "8:30 AM",
+        "8:00 AM", "8:30 AM",
         "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM",
         "12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM", "2:00 PM", "2:30 PM",
         "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM", "5:00 PM", "5:30 PM", 
         "6:00 PM", "6:30 PM", "7:00 PM", "7:30 PM", "8:00 PM", "8:30 PM",
-        "9:00 PM", "9:30 PM"
+        "9:00 PM", "9:00 PM"
     ]
 
     const dayLabels = [
@@ -37,7 +37,6 @@ const Calendar = () => {
     };
 
     const handleMouseDown = (row, col) => {
-        // console.log("Mouse Down: row %d, col %d", row, col)
         setIsMouseDown(true);
         setInitialDragState(clickedRectangles[row][col]);
         isDragging.current = true;
@@ -67,58 +66,16 @@ const Calendar = () => {
     };
 
     const handleTouchMove = (event) => {
-
-        //const target = event.target;
         const touch = event.touches[0];
         const target = document.elementFromPoint(touch.clientX, touch.clientY);
         if (target && target.classList.contains('rectangle')) {
             const row = parseInt(target.getAttribute('data-row'), 10);
             const col = parseInt(target.getAttribute('data-col'), 10);
             console.log('row: %d, col: %d', row, col)
-            if (row < 33 && row > 0 && col < 8 && row > 1) {
+            if (row < 29 && row > 0 && col < 8 && row > 1) {
                 handleMouseEnter(row, col);
             }
         }
-        /*
-        const touch = event.touches[0]
-        console.log('x: %d, y: %d', touch.clientX, touch.clientY)
-
-        const calendarElement = document.querySelector('.calDiv');
-        const calendarRect = calendarElement.getBoundingClientRect();
-        const touchY = event.touches[0].clientY;
-        let calc_y = touchY - calendarRect.top;
-
-        
-
-        //const touchY = touch.clientY + window.scrollY
-        const rect_height = window.innerHeight * 0.025;
-        const rect_width = window.innerWidth * 0.1;
-        
-        if (calc_y > 8*rect_height){
-            calc_y -= rect_height;
-        }
-        if (calc_y > 15*rect_height){
-            calc_y -= rect_height;
-        }
-        if (calc_y > 19*rect_height){
-            calc_y -= rect_height;
-        }
-        if (calc_y > 26*rect_height){
-            calc_y -= rect_height;
-        }
-        
-
-        //const calc_y = touchY - (75 + (2 * rect_height)); // FIND CORRECT MULTIPLY VALUE!!!
-        const calc_x = touch.clientX - ((window.innerWidth - (8 * (0.1 * window.innerWidth)))/2);
-        console.log('calc x: %d,  calc y: %d', calc_x, calc_y);
-        
-        const calc_row = Math.floor(calc_y / rect_height);
-        const calc_col = Math.floor(calc_x / rect_width)
-        console.log('calc row: %d,  calc col: %d', calc_row, calc_col);
-        if (calc_row < 33 && calc_row > 0 && calc_col < 8 && calc_row > 1){
-            handleMouseEnter(calc_row,calc_col);
-        }
-        */
     };
 
     
@@ -143,16 +100,13 @@ const Calendar = () => {
         };
     }, []);
 
-    const findTimeRanges = (row, col) => {
-        const start_time = timeLabels[row - 2];
-        let cur_row = row + 1;
-        for(; cur_row < 32; cur_row ++){
-            if (!clickedRectangles[cur_row][col]){
-                break;
-            }
+    const findTimeRanges = (row) => {
+        if (row === 28){
+            return `9:00 PM - 9:30PM`
         }
-
-        const end_time = timeLabels[cur_row - 2]
+        const start_time = timeLabels[row - 2];
+        const end_time = timeLabels[row - 1]
+        
         return `${start_time} - ${end_time}`;
     }
 
@@ -223,9 +177,13 @@ const Calendar = () => {
                 <div>
                     <span className="daylabel"> {date.toLocaleDateString(undefined, {month:"numeric", day: 'numeric'})} </span>
                 </div>
-            )) || (isClicked && ((row === 1 || !clickedRectangles[row - 1][col]) && (
-                <span className="timeLabel">{findTimeRanges(row, col)}</span> 
-            )))
+            )) || (isClicked && ((row === 1 || (row === 28 && !clickedRectangles[row - 1][col]) ||  (!clickedRectangles[row - 1][col] && !clickedRectangles[row + 1][col]))  && (
+                <span className="timeLabel">{findTimeRanges(row)}</span> 
+            ))) || ((isClicked && !clickedRectangles[row - 1][col]) && (
+                <span className="timeLabel">{timeLabels[row-2]}</span> 
+            )) || ((isClicked && (row === 28 || !clickedRectangles[row + 1][col])) && (
+                <span className="timeLabel">{timeLabels[row-1]}</span> 
+            ))
         }
     </div>
     </div>
