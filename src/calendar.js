@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./styles.css"; 
 
-const Calendar = () => {
+const Calendar = ({ setPlayerInfo }) => {
 
   // Set the number of rows and columns
     const rows = 29;
@@ -26,6 +26,25 @@ const Calendar = () => {
     const [initialDragState, setInitialDragState] = useState(null);
     const isDragging = useRef(false);
 
+    const updateAvailability = () => {
+        const availability = [];
+        clickedRectangles.forEach((row, rowIndex) => {
+            row.forEach((isSelected, colIndex) => {
+                if (isSelected && rowIndex > 1 && colIndex > 0) {
+                    const timeRange = findTimeRanges(rowIndex); // Helper function to get time
+                    const day = dayLabels[(colIndex - 1 + currentDay) % 7];
+                    availability.push({ day, timeRange });
+                }
+            });
+            
+        });
+
+        setPlayerInfo((prev) => ({
+            ...prev, // keep all the other fields the same
+            availability // update the availability
+        }));
+    }
+
     const handleClick = (row, col) => {
         if (row > 1 && col > 0) { // Only handle clicks for the inner grid
             setClickedRectangles(prev => {
@@ -34,6 +53,7 @@ const Calendar = () => {
                 return newRectangles;
             });
         }
+        updateAvailability();
     };
 
     const handleMouseDown = (row, col) => {
@@ -53,11 +73,13 @@ const Calendar = () => {
         });
         }
         }
+        updateAvailability();
     };
     
     const handleMouseUp = () => {
         setIsMouseDown(false); // Release the mouse
         isDragging.current = false;
+        updateAvailability();
     };
 
     const handleTouchStart = (row, col) =>  {

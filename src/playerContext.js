@@ -10,7 +10,8 @@ export function PlayerProvider({ children }) {
         name: '',
         age: '',
         location: '',
-        sessionType: ''
+        sessionType: '',
+        availability : []
     });
 
     return (
