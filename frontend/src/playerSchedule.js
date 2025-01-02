@@ -7,7 +7,7 @@ import { usePlayerInfo, setPlayerInfo} from './playerContext';
 
 function PlayerSchedule( {onBack, onSubmit} ){
     const {playerInfo, setPlayerInfo} = usePlayerInfo();
-     // console.log(playerInfo)
+    // DO A LITTLE EXTRA WORK TO GET TIMES IN A READABLE FORMAT
     const handleSubmit = async () => {
         console.log(playerInfo)
         const rows = [
@@ -31,7 +31,7 @@ function PlayerSchedule( {onBack, onSubmit} ){
             if (response.ok){
                 const result = await response.json();
                 console.log('Data written to Google Sheets:', result);
-                alert('Player information submitted successfully!');
+                //alert('Player information submitted successfully!');
             } else {
                 console.error('Failed to write data:', await response.text());
                 alert('Failed to submit player information.');
@@ -41,9 +41,9 @@ function PlayerSchedule( {onBack, onSubmit} ){
             alert('An error occurred while submitting the player information.');
         };
 
-        //if(onSubmit){
-            //onSubmit(playerInfo);
-        //}
+        if(onSubmit){
+            onSubmit(playerInfo);
+        }
     }
     
     
