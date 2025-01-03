@@ -7,21 +7,62 @@ import { usePlayerInfo, setPlayerInfo} from './playerContext';
 
 function PlayerSchedule( {onBack, onSubmit} ){
     const {playerInfo, setPlayerInfo} = usePlayerInfo();
-    // DO A LITTLE EXTRA WORK TO GET TIMES IN A READABLE FORMAT
+
+    const convertAvailabilitytoString = (availabilityMap) => {
+        // helper function to parse the date
+        const parseDate = (formattedDate) =>  {
+            const [day, date] = formattedDate.split(" ");
+            const [month, dayOfMonth] = date.split("/").map(Number);
+            const year = new Date().getFullYear();
+            return new Date(year, month - 1, dayOfMonth);
+        }
+
+        const sortedDates = Object.keys(availabilityMap).sort((a,b) => {
+            return parseDate(a) - parseDate(b);
+        });
+
+        const availabilityString = sortedDates.map((date)=> `${date}: ${availabilityMap[date].join(", ")}`).join("\n");
+
+        return availabilityString;
+        
+    }
+
+    const formatSubmissionDate = (date) =>{
+        const timeFormatter = new Intl.DateTimeFormat("en-US", {
+            hour: "numeric",
+            minute: "numeric",
+            hour12: true
+        });
+    
+        const dateFormatter = new Intl.DateTimeFormat("en-US", {
+            month: "long",
+            day: "numeric",
+            year: "numeric"
+        });
+    
+        const time = timeFormatter.format(date);
+        const formattedDate = dateFormatter.format(date);
+    
+        return `${time}, ${formattedDate}`;
+    };
+
     const handleSubmit = async () => {
         console.log(playerInfo)
+
+
         const rows = [
             [
                 playerInfo.name,
                 playerInfo.age,
                 playerInfo.location,
                 playerInfo.sessionType,
-                playerInfo.availability.join(', '),
+                formatSubmissionDate(new Date()),
+                convertAvailabilitytoString(playerInfo.availability),
             ],
         ];
 
         try {
-            const response = await fetch('http://localhost:3001/write-to-sheet', {
+            const response = await fetch('http://192.168.1.111:3001/write-to-sheet', {
                 method: 'POST',
                 headers: {'Content-Type' : 'application/json'},
                 body: JSON.stringify({values: rows})

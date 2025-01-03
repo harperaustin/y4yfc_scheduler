@@ -27,13 +27,34 @@ const Calendar = ({ setPlayerInfo }) => {
     const isDragging = useRef(false);
 
     const updateAvailability = () => {
-        const availability = [];
+        const availability = {};
         clickedRectangles.forEach((row, rowIndex) => {
             row.forEach((isSelected, colIndex) => {
                 if (isSelected && rowIndex > 1 && colIndex > 0) {
                     const timeRange = findTimeRanges(rowIndex); // Helper function to get time
+                    const [newStart, newEnd] = timeRange.split(" - ");
                     const day = dayLabels[(colIndex - 1 + currentDay) % 7];
-                    availability.push({ day, timeRange });
+                    const date = new Date(today)
+                    date.setDate(today.getDate() + (colIndex))
+                    const fullDate = `${day} ${date.getMonth() + 1}/${date.getDate()}`;
+                    if (!availability[fullDate]){
+                        availability[fullDate] = [];
+                    }
+
+                    
+                    // get the array of availability for the current day
+                    const dayAvailability = availability[fullDate];
+                    if (dayAvailability.length > 0){
+                        const lastRange = dayAvailability[dayAvailability.length - 1];
+                        const [lastStart, lastEnd] = lastRange.split(" - ");
+                        if(lastEnd === newStart){
+                            dayAvailability[dayAvailability.length - 1] = `${lastStart} - ${newEnd}`;
+                        } else {
+                            availability[fullDate].push(timeRange);
+                        }
+                    } else {
+                        availability[fullDate].push(timeRange);
+                    }
                 }
             });
             

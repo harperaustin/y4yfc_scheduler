@@ -11,7 +11,7 @@ export function PlayerProvider({ children }) {
         age: '',
         location: '',
         sessionType: '',
-        availability : []
+        availability : {}
     });
 
     return (

@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './assets/LOGO INVERT.png';
+import logo from './assets/LOGO INVERT (1).png';
 import "./startingStyles.css"; 
 
 
